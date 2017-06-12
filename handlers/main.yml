@@ -1,0 +1,4 @@
+---
+# handlers file for build-inventory
+- name: restartNodeManager
+  service: name=nodemanager state=restarted

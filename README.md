@@ -1,22 +1,27 @@
-Role Name
+Oem Agent Decommission
 =========
 
-A brief description of the role goes here.
+Role to decommission OEM agents. 
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+oem-agent-get-home role is required. get-fmw-domain-structure role might be required if you want to use that feature.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+    OEM_URL: https://oem.example.com:8090/em # URL which can be used to login to OEM.
+    OEM_PASSWORD: sysman password for OEM.
+    OEM_HOST: oms1.example.com # One of OEM's nodes. Ansible host should have ssh-key based access to it.
+    OEM_AGENT_PORT: 3872 # agent port
+    
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+dborysenko.oem-agent-get-home
+dborysenko.get-fmw-domain-structure
 
 Example Playbook
 ----------------

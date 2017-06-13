@@ -31,4 +31,4 @@
     delegate_to: "{{ OEM_HOST }}"
 
   become: yes
-  become_user: "{{ AGENT_USER }}"
+  become_user: "{{ agentOwner }}"

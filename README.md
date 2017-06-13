@@ -28,9 +28,46 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+site.yml
+    
+    - hosts: adminserver
       roles:
-         - { role: username.rolename, x: 42 }
+        - get-fmw-domain-structure
+
+    - hosts: weblogic, adminsu, singlehosts
+      gather_facts: False
+      roles:
+        - oem-agent-get-home
+        - oem-agent-decommission
+
+hosts
+
+
+    [adminserver]
+    adminserver.example.com
+    
+    [singlehosts]
+    
+    [weblogic]
+    
+    [all]
+    
+    [all:children]
+    adminserver
+    singlehosts
+    weblogic
+    
+    [all:vars]
+    ansible_user=dborysenko
+    ansible_become_method=su
+    ansible_become_exe=dzdo
+    ansible_become_flags="su -"
+    
+    [deleg]
+    oms1.example.com
+    
+    [deleg:vars]
+    ansible_user=oracle
 
 License
 -------
@@ -40,4 +77,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Dmytro Borysenko borysenus@gmail.com

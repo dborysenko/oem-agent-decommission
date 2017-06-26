@@ -32,13 +32,13 @@ site.yml
     
     - hosts: adminserver
       roles:
-        - get-fmw-domain-structure
+        - dborysenko.get-fmw-domain-structure
 
     - hosts: weblogic, adminsu, singlehosts
       gather_facts: False
       roles:
-        - oem-agent-get-home
-        - oem-agent-decommission
+        - dborysenko.oem-agent-get-home
+        - dborysenko.oem-agent-decommission
 
 hosts
 

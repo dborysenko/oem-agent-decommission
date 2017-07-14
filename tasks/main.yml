@@ -1,9 +1,5 @@
 ---
 - block:
-  - name: Looking for agent in OEM
-    fail: msg="Agent is not registered in OEM"
-    when: "agentLocation is not defined"
-
   - name: logout from emcli
     shell: emcli logout
     ignore_errors: yes
@@ -14,7 +10,10 @@
     shell: emcli login -username=sysman -password={{ OEM_PASSWORD }}
     run_once: true
     delegate_to: "{{ OEM_HOST }}"
+  become: yes
+  become_user: oracle
 
+- block:
   - name: Create blackout
     shell: ./emctl start blackout "{{ inventory_hostname }}" -nodeLevel
     args:
@@ -25,10 +24,12 @@
     shell: ./emctl stop agent
     args:
       chdir: "{{ agentLocation }}/agent_inst/bin"
-
-  - name: unregister targets
-    shell: emcli delete_target -name="{{ inventory_hostname }}":"{{ OEM_AGENT_PORT }}" -type=oracle_emd -delete_monitored_targets -delete_members -async
-    delegate_to: "{{ OEM_HOST }}"
-
   become: yes
   become_user: "{{ agentOwner }}"
+
+- name: unregister targets
+  shell: emcli delete_target -name="{{ inventory_hostname }}":"{{ OEM_AGENT_PORT }}" -type=oracle_emd -delete_monitored_targets -delete_members -async
+  delegate_to: "{{ OEM_HOST }}"
+  become: yes
+  become_user: oracle
+
